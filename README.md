@@ -2,7 +2,9 @@
 
 Un clon funcional y estéticamente premium de la aplicación móvil de ChatGPT, construido con **React Native (Expo)** para el frontend y **FastAPI (Python)** para el backend.
 
-![Demo del Proyecto](./frontend/assets/images/image.png)
+<p align="center">
+  <img src="./frontend/assets/images/image.png" width="300" alt="ChatGPT Clone Demo" />
+</p>
 
 ## ✨ Características
 
