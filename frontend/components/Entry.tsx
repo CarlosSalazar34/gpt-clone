@@ -9,14 +9,15 @@ import { DataContext, Message } from "../context/DataContext";
 
 export const Entry = () => {
     const { message, setMessage } = useContext(InputContext)!;
-    const { setData, setIsLoading } = useContext(DataContext)!;
+    const { data, setData, setIsLoading } = useContext(DataContext)!;
 
     const sendMessage = async () => {
         if (!message.trim()) return;
 
         const userMessage: Message = { role: "user", content: message };
+        const updatedHistory = [...data, userMessage];
+        
         setData((prev: Message[]) => [...prev, userMessage]);
-        const currentMessage = message;
         setMessage("");
         setIsLoading(true);
 
@@ -28,7 +29,7 @@ export const Entry = () => {
                     "Content-Type": 'application/json'
                 },
                 body: JSON.stringify({
-                    prompt: currentMessage
+                    messages: updatedHistory
                 })
             });
 

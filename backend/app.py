@@ -1,5 +1,4 @@
 from socket import socket
-from httpx import __name
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from openai import OpenAI
@@ -29,13 +28,15 @@ def read_root():
 async def chat(request: Request):
     try:
         data: dict = await request.json()
-        prompt = data.get("prompt")
+        messages = data.get("messages", [])
+        
+        # Si no hay mensajes de sistema, agregamos uno por defecto
+        if not any(msg.get("role") == "system" for msg in messages):
+            messages.insert(0, {"role": "system", "content": "Eres un asistente de inteligencia artificial"})
+
         response = client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "Eres un asistente de inteligencia artificial"},
-                {"role": "user", "content": prompt}
-            ]
+            messages=messages
         )
         print(response.choices[0].message.content)
         return {"response": response.choices[0].message.content}
