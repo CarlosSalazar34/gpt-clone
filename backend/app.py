@@ -44,7 +44,3 @@ async def chat(request: Request):
     except Exception as e: 
         return {"error": str(e)}
 
-if __name__ == "__main__":
-    import uvicorn
-    import socket
-    uvicorn.run(app="app:app", host=f"{socket.gethostbyname(socket.gethostname())}", port=5000, reload=True)
